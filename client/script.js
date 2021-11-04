@@ -5,27 +5,28 @@ const validateBtn = document.getElementById("validateBtn");
 const googleImg = document.getElementById("googleImg");
 const googleLinkA = document.getElementById("googleLinkA");
 const validateInput = document.getElementById("validateInput");
+const validateDiv = document.getElementById("validateDiv");
 
 googleImg.style.display = "none";
 pairBtn.style.display = "none";
 validateBtn.style.display = "none";
 validateInput.style.display = "none";
+validateDiv.style.display = "none";
 let isLoggedIn = false;
 
 btn.addEventListener("click", () => {
-    onGoogleAuth(userInput, pairBtn, validateBtn, validateInput);
+    onGoogleAuth(userInput, pairBtn, validateBtn, validateInput, btn);
 });
 
 pairBtn.addEventListener("click", () => {
-    googlePair(googleImg)
+    googlePair(googleImg, validateDiv)
 });
 
 validateBtn.addEventListener("click", () => {
     googleValidate(validateInput);
 })
 
-function onGoogleAuth(userInput, pairBtn, validateBtn, validateInput) {
-    console.log(userInput.value);
+function onGoogleAuth(userInput, pairBtn, validateBtn, validateInput, btn) {
     const user = { username: userInput.value }
     fetch(`http://localhost:3333/users/`, {
         method: "POST",
@@ -38,14 +39,22 @@ function onGoogleAuth(userInput, pairBtn, validateBtn, validateInput) {
     }).then(response => {
         console.log(`Response: ${response.status} ${response.statusText}`)
         return response.text()
-    }).then(text => {
-        console.log(text)
-        isLoggedIn = text
-        displayOrHidBeutton(text, pairBtn, validateBtn, validateInput)
-
+    }).then(didLoggedIn => {
+        isLoggedIn = didLoggedIn
+        displayOrHidBeutton(didLoggedIn, pairBtn, validateBtn, validateInput)
+        hideMainPageIfLoggedIn(userInput, btn)
     }).catch(err => {
         console.log(err);
     })
+}
+
+function showValidateDivAfterPair(validateDiv) {
+    setInterval(() => validateDiv.style.display = "block", 2000);
+}
+
+function hideMainPageIfLoggedIn(input, btn) {
+    input.style.display = 'none';
+    btn.style.display = 'none';
 }
 
 function displayOrHidBeutton(bool, pairBtn, validateBtn) {
@@ -72,7 +81,8 @@ function googlePair(googleImg) {
         text = text.split('<')[2].split("'")[1]
         console.log(text)
         googleImg.src = text
-        console.log(googleImg.attributes)
+        console.log(googleImg.attributes);
+        showValidateDivAfterPair(validateDiv)
     }).catch(err => {
         console.log(err);
     })
