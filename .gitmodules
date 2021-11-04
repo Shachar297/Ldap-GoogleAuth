@@ -1,0 +1,3 @@
+[submodule "2FA"]
+	path = 2FA
+	url = git@github.com:Shachar297/2FA.git

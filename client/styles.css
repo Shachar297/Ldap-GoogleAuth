@@ -1,0 +1,37 @@
+
+img {
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.pair {
+    width: 85vw;
+    display:flex;
+    flex-direction: column;
+}
+
+.pair > button {
+    margin: 2vh;
+}
+
+.pair > button{
+    width: 25vw;
+}
+
+.pair > input {
+    width: 25vw;
+}
+
+.container {
+    width: 85vw;
+    display:flex;
+    flex-direction: row;
+}
+
+.container > * {
+    width: 25%;
+}
+
+input::placeholder{
+    font-size: 8px;
+}

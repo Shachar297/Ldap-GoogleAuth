@@ -20,14 +20,20 @@ router.post("/pair/", (request, response, next) => {
             response.json(data)
         }).catch(error => {
             console.log('error', error);
+            return next(error);
         });
 
+});
+
+router.post("/validate/userPin/", (request, response, next) => {
+    const pin = request.body.validatePin;
+    userLogic.validate(pin).then(
+        (data) => {
+            response.json(data)
+        }).catch(error => {
+            return next(error);
+        })
 })
-// const authenticator = require('authenticator');
-// let formattedKey = authenticator.generateKey();
-// var formattedToken = authenticator.generateToken(formattedKey);
-// authenticator.verifyToken(formattedKey, formattedToken);
-// authenticator.verifyToken(formattedKey, '000 000');
-// authenticator.generateTotpUri(formattedKey, "john.doe@email.com", "ACME Co", 'SHA1', 6, 30);
+
 
 module.exports = router
