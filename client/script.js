@@ -1,3 +1,4 @@
+// HTML Declerations
 const btn = document.getElementById("googleGo");
 const userInput = document.getElementById("userInput");
 const pairBtn = document.getElementById("pairBtn");
@@ -6,12 +7,15 @@ const googleImg = document.getElementById("googleImg");
 const googleLinkA = document.getElementById("googleLinkA");
 const validateInput = document.getElementById("validateInput");
 const validateDiv = document.getElementById("validateDiv");
-
+const userOutput = document.getElementById("userOutput");
+// Initializing Styles dynamicly.
 googleImg.style.display = "none";
 pairBtn.style.display = "none";
 validateBtn.style.display = "none";
 validateInput.style.display = "none";
 validateDiv.style.display = "none";
+userOutput.style.display = "none";
+
 let isLoggedIn = false;
 
 btn.addEventListener("click", () => {
@@ -23,7 +27,7 @@ pairBtn.addEventListener("click", () => {
 });
 
 validateBtn.addEventListener("click", () => {
-    googleValidate(validateInput);
+    googleValidate(validateInput, userOutput);
 })
 
 function onGoogleAuth(userInput, pairBtn, validateBtn, validateInput, btn) {
@@ -88,7 +92,7 @@ function googlePair(googleImg) {
     })
 }
 
-function googleValidate(validateInput) {
+function googleValidate(validateInput, userOutput) {
     const pin = {validatePin : validateInput.value}
     fetch("http://localhost:3333/users/validate/userPin/", {
         method: "POST",
@@ -103,7 +107,13 @@ function googleValidate(validateInput) {
         return response.text()
     }).then(text => {
         console.log(text)
+        showUseroutput(userOutput)
     }).catch(err => {
         console.log(err);
     })
+}
+
+
+function showUseroutput(userOutput) {
+    userOutput.style.display = "block";
 }

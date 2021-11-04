@@ -68,3 +68,11 @@ img {
     margin-top: 12vh;
     margin-left: -9vw;
 }
+
+.userOutput {
+    margin-top: 5vh;
+    color: green;
+    font-weight: bold;
+    font-size: 1rem;
+    box-shadow: grey 2px 2px 2px 2px;
+}
