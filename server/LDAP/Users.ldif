@@ -1,0 +1,43 @@
+#dn: ou=groups,dc=demo,dc=com
+#objectClass: organizationalUnit
+#objectClass: top
+#ou: groups
+
+dn: ou=users,dc=demo,dc=com
+objectClass: organizationalUnit
+objectClass: top
+ou: users
+
+
+dn: uid=gil,ou=users,dc=demo,dc=com
+objectClass: top
+objectClass: person
+objectClass: organizationalPerson
+objectClass: inetOrgPerson
+cn: gil
+uid: gil
+givenName: Gil
+sn: Gottesman
+userPassword: 12345
+
+dn: uid=shachar,ou=users,dc=demo,dc=com
+objectClass: top
+objectClass: person
+objectClass: organizationalPerson
+objectClass: inetOrgPerson
+cn: shachar
+uid: shachar
+givenName: Shachar
+sn: Ovadida
+userPassword: 1234
+
+dn: uid=nir,ou=users,dc=demo,dc=com
+objectClass: top
+objectClass: person
+objectClass: organizationalPerson
+objectClass: inetOrgPerson
+cn: nir
+uid: nir
+givenName: Nir
+sn: Geier
+userPassword: nir
