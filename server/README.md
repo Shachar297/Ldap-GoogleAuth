@@ -8,8 +8,6 @@
 
 * [Google Authentication Api](https://www.authenticatorapi.com/)
 
-```javascript
-function install() {
-    
-}
-```
+* ([ implementation ](/server/logic/user-logic.js))
+
+* [ldapjs](http://ldapjs.org/client.html)
