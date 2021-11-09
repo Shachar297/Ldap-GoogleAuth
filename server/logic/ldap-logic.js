@@ -8,14 +8,10 @@ var
         url: ['ldap://localhost:3890', "ldap://localhost:3890"]
     });
 
-//,dc=demo,dc=com",
 
 
 
 async function createClient() {
-
-    // ldapsearch -x -H ldap://localhost:3890 -b dc=demo,dc=com -D "cn=admin,dc=demo,dc=com" -w password cn=shachar
-    // ldapsearch -x -H ldap://localhost:3890 -b dc=ssotest,dc=staging,dc=talkingquickly,dc=co,dc=uk -D "cn=admin,dc=ssotest,dc=staing,dc=talkingquickly,dc=co,dc=uk" -w 123456// 
 
     client.on('error', (err) => {
         console.log('------- Err: ', err);
@@ -48,9 +44,8 @@ let addUser = (client) => {
                 console.error(err);
                 throw new Error(err);
             }
-            console.log(response, "res");
         })
-    console.log(newClient)
+        return newClient;
 }
 
 
@@ -92,7 +87,7 @@ async function clientCompare(client) {
 
         })
     })
-
+    return answer;
 }
 
 module.exports = {

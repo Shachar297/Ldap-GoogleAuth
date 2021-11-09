@@ -6,7 +6,7 @@
 * download ldap
 * download ldap-utils
 * run ldap
-* expose ldap server 
+* expose ldap port 
 
 
 

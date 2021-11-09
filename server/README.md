@@ -6,8 +6,7 @@
 
 * [Submodule refers to the LDAP entry.](/server)
 
-* [Google Authentication Api](https://www.authenticatorapi.com/)
+* [Google Authentication Api](https://www.authenticatorapi.com/) ([ implementation ](/server/logic/user-logic.js))
 
-* ([ implementation ](/server/logic/user-logic.js))
+* [ldapjs](http://ldapjs.org/client.html) ([ implementation ](/server/logic/ldap-logic.js))
 
-* [ldapjs](http://ldapjs.org/client.html)

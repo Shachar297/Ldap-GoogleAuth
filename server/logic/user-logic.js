@@ -1,10 +1,11 @@
 const
     https = require('https'),
     fs = require('fs-extra'),
+    config = require('../google-api.json'),
     options = {
-        hostname: 'www.authenticatorApi.com',
-        method: 'GET',
-        port: 443
+        hostname: config.hostname,
+        method: config.method,
+        port: config.port
     };
 
 // Ensure that the file exist
