@@ -8,4 +8,8 @@
 
 * [Google Authentication Api](https://www.authenticatorapi.com/)
 
-<label> simple </label>
+```javascript
+function install() {
+    
+}
+```
