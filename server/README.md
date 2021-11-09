@@ -4,7 +4,7 @@
 
 * <a href='https://github.com/Shachar297/Ldap-GoogleAuth/blob/master/server/requirements/instructions.md' target=_blank> instructions </a>
 
-* [Submodule refers to the LDAP entry.](/server)
+* [Submodule refers to the LDAP entry.](../)
 
 * [Google Authentication Api](https://www.authenticatorapi.com/) ([ implementation ](/server/logic/user-logic.js))
 
