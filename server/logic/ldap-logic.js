@@ -36,9 +36,9 @@ let addUser = (client) => {
         sn: 'bar1232',
         objectclass: ['organizationalPerson', 'person'],
         userPassword: '1234'
-      };
-    
-      const user = 'ou=users12,ou=users,dc=demo,dc=com'
+    };
+
+    const user = 'ou=users12,ou=users,dc=demo,dc=com'
     const newClient = client.add(
         user,
         entry,
@@ -50,7 +50,7 @@ let addUser = (client) => {
             }
             console.log(response, "res");
         })
-        console.log(newClient)
+    console.log(newClient)
 }
 
 
@@ -63,7 +63,7 @@ async function bindClient(client) {
             console.log(error);
             throw new Error(error)
         }
-        if(answer) return clientCompare(client);
+        if (answer) return clientCompare(client);
         return;
     });
 
@@ -73,24 +73,24 @@ async function bindClient(client) {
 
 async function clientCompare(client) {
     const user = {
-        username : "Shachar"
+        username: "Shachar"
     }
-    const answer = client.compare('uid=shachar,ou=users,dc=demo,dc=com', 'sn' ,'Ovadida', (err, matched) => {
+    const answer = client.compare('uid=shachar,ou=users,dc=demo,dc=com', 'sn', 'Ovadida', (err, matched) => {
         console.log(matched, "matched")
         console.log(err, "error")
-        if(err) {
+        if (err) {
             console.log(err, "error")
             throw new Error(err)
         }
-        
 
-   userLogic.login(user.username).then((login) => {
-        if(login) {
-           let pair = userLogic.pair();
-        console.log(pair)
-        }
-        
-    })  
+
+        userLogic.login(user.username).then((login) => {
+            if (login) {
+                let pair = userLogic.pair();
+                console.log(pair)
+            }
+
+        })
     })
 
 }
