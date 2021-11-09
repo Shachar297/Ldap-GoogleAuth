@@ -12,7 +12,6 @@ fs.ensureFileSync(`${__dirname}/../users.json`);
 
 // Load the users
 usersList = fs.readJSONSync(`${__dirname}/../users.json`);
-
 // Login logic
 async function login(user) {
     // Store the user name. 
@@ -77,52 +76,52 @@ async function pair() {
 
 async function validate(userPin) {
     console.log(userPin);
-        // Define params
-        let req;
+    // Define params
+    let req;
 
-        // Return promise
-        return new Promise(function (resolve, reject) {
-            let userData = JSON.parse(process.env.userData);
-    
-            console.log(userData);
-            // Check to see if user name found during login
-            if (!userData) {
-                return reject('User not valid');
-            };
-    
-            console.log(Object.assign(
+    // Return promise
+    return new Promise(function (resolve, reject) {
+        let userData = JSON.parse(process.env.userData);
+
+        console.log(userData);
+        // Check to see if user name found during login
+        if (!userData) {
+            return reject('User not valid');
+        };
+
+        console.log(Object.assign(
+            {},
+            options, {
+            path: `/pair.aspx?AppName=A&AppInfo=${userData.username}&SecretCode=${userData.sercetPhrase}`
+        }));
+
+        // Execute the API call
+        req = https.request(
+            Object.assign(
                 {},
                 options, {
-                path: `/pair.aspx?AppName=A&AppInfo=${userData.username}&SecretCode=${userData.sercetPhrase}`
-            }));
-    
-            // Execute the API call
-            req = https.request(
-                Object.assign(
-                    {},
-                    options, {
-                    path: `/Validate.aspx?Pin=${userPin}&SecretCode=${userData.sercetPhrase}`
-                }),
-                res => {
-                    console.log(`statusCode: ${res.statusCode}`);
-    
-                    // Listen for data
-                    res.on('data', data => {
-                        console.log("!!!")
-                        process.stdout.write(data);
-                        return resolve(data.toString());
-                    });
+                path: `/Validate.aspx?Pin=${userPin}&SecretCode=${userData.sercetPhrase}`
+            }),
+            res => {
+                console.log(`statusCode: ${res.statusCode}`);
+
+                // Listen for data
+                res.on('data', data => {
+                    console.log("!!!")
+                    process.stdout.write(data);
+                    return resolve(data.toString());
                 });
-    
-            // Listen for error
-            req.on('error', error => {
-                process.stdout.write(error);
-                return resolve(error);
             });
-    
-            // Execute the request
-            req.end();
+
+        // Listen for error
+        req.on('error', error => {
+            process.stdout.write(error);
+            return resolve(error);
         });
+
+        // Execute the request
+        req.end();
+    });
 }
 module.exports = {
     login,
