@@ -1,3 +1,3 @@
 # Workflow
 
-* [1]: (dependencies.sh)
+* [Dependencies]: (dhttps://github.com/Shachar297/Ldap-GoogleAuth/blob/master/server/requirements/dependecies.sh)
