@@ -8,3 +8,5 @@
 
 * [ldapjs](http://ldapjs.org/client.html) ([ implementation ](/server/logic/ldap-logic.js))
 
+
+* Dive in and see the [instructions README](./requirements/README.md)

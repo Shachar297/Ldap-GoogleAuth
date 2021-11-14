@@ -16,7 +16,7 @@ helm upgrade --install openldap ./charts/openldap --values openldap/values-openl
 kubectl get secret --namespace identity openldap -o jsonpath="{.data.LDAP_ADMIN_PASSWORD}" | base64 --decode; echo
 kubectl get secret --namespace identity openldap -o jsonpath="{.data.LDAP_CONFIG_PASSWORD}" | base64 --decode; echo
 ```
-* one last step, expose LDAP port to outcoming http request
+* one last step, expose LDAP port to outcoming http requests
 ```
 kubectl port-forward \$(kubectl get pods -n default --selector='release=openldap' -o jsonpath='{.items[0].metadata.name}') \3890:389
 ```
@@ -27,4 +27,16 @@ kubectl port-forward \$(kubectl get pods -n default --selector='release=openldap
 * make sure the ldap instructions are complete and ldap is up and running.
 
 * There are several dependecies here, run [dependencies.sh](path) to store them.
+
+
+
+## Flow
+
+* Start Ldap Server
+* Start NodeJs
+
+* This example goes automaticly when server starts, details are hard-coded within the [ldap-logic](../logic/ldap-logic.js).
+* If you want to chane this, pass in to the argument to the [ldap-controller](../controllers/ldap-contoller.js) and change the and pass it on to the next module.
+
+* Next, for test you will be printed the google QR-code, then you will need to scan it, if logged in successfuly.
 

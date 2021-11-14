@@ -1,18 +1,14 @@
 const
     https = require('https'),
     fs = require('fs-extra'),
-    config = require('../enviorenment/google-api.json'),
-    options = {
-        hostname: config.hostname,
-        method: config.method,
-        port: config.port
-    };
+    config = require('../enviorenment/google-api.json');
+
 
 // Ensure that the file exist
-fs.ensureFileSync(`${__dirname}/../enviorenment/google-api.json`);
+fs.ensureFileSync(`${__dirname}/../enviorenment/users.json`);
 
 // Load the users
-usersList = fs.readJSONSync(`${__dirname}/../enviorenment/google-api.json`);
+usersList = fs.readJSONSync(`${__dirname}/../enviorenment/users.json`);
 // Login logic
 async function login(user) {
     // Store the user name. 
@@ -57,7 +53,6 @@ async function pair() {
 
                 // Listen for data
                 res.on('data', data => {
-                    console.log("!!!")
                     process.stdout.write(data);
                     return resolve(data.toString());
                 });

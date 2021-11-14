@@ -1,7 +1,6 @@
 const express = require('express');
 router = express.Router(),
 ldapLogic = require("../logic/ldap-logic"),
-ldap = require('ldapjs');
 
 
 router.post ("/" , (request, response, next) => {
@@ -13,7 +12,7 @@ router.post ("/" , (request, response, next) => {
         console.log("er")
         return next(error);
     }
-})
+});
 
 
 // Add An Entry from scratch.

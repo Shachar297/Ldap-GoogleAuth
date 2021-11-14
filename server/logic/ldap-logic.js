@@ -29,13 +29,13 @@ async function createClient() {
 let addUser = (client) => {
 
     const entry = {
-        cn: 'foo2334',
+        cn: 'foo23341',
         sn: 'bar1232',
         objectclass: ['organizationalPerson', 'person'],
         userPassword: '1234'
     };
 
-    const user = 'ou=users12,ou=users,dc=demo,dc=com'
+    const user = 'ou=users122,ou=users,dc=demo,dc=com'
     const newClient = client.add(
         user,
         entry,
