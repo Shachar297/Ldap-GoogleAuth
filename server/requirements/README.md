@@ -40,3 +40,4 @@ kubectl port-forward \$(kubectl get pods -n default --selector='release=openldap
 
 * Next, for test you will be printed the google QR-code, then you will need to scan it, if logged in successfuly.
 
+* If you execute the addUser function under ldap-controller, you will be needed to pair a key which sent from google.
