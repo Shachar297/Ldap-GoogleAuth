@@ -10,7 +10,7 @@ helm upgrade --install openldap ./charts/openldap --values openldap/values-openl
 
 * To Ensure process is going to complete succesfully, Make sure that ldap is up and running.
 * also, make sure that you hold the port, and the DN for the ldap database.
-* For this example you can use [admin.json](/admin.json)
+* For this example you can use [admin.json](/../enviorenment)
 * Or if you just cloned this repository, have ldap running, execute the following command to simply get the needed credentials.
 ```
 kubectl get secret --namespace identity openldap -o jsonpath="{.data.LDAP_ADMIN_PASSWORD}" | base64 --decode; echo
