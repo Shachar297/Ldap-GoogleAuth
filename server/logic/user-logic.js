@@ -9,10 +9,10 @@ const
     };
 
 // Ensure that the file exist
-fs.ensureFileSync(`${__dirname}/../evnironment/google-api.json`);
+fs.ensureFileSync(`${__dirname}/../enviorenment/google-api.json`);
 
 // Load the users
-usersList = fs.readJSONSync(`${__dirname}/../evnironment/google-api.json`);
+usersList = fs.readJSONSync(`${__dirname}/../enviorenment/google-api.json`);
 // Login logic
 async function login(user) {
     // Store the user name. 

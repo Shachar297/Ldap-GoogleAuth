@@ -1,5 +1,6 @@
 {
     "hostname" : "localhost",
     "port" : 3890,
-    "protocol" : "ldap"
+    "protocol" : "ldap",
+    "clientListenIp" : "ldap://localhost:3890"
 }
