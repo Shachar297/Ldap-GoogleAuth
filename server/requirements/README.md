@@ -10,7 +10,7 @@ helm upgrade --install openldap ./charts/openldap --values openldap/values-openl
 
 * To Ensure process is going to complete succesfully, Make sure that ldap is up and running.
 * also, make sure that you hold the port, and the DN for the ldap database.
-* For this example you can use [admin.json](path)
+* For this example you can use [admin.json](../enviorenment/admin.json)
 * Or if you just cloned this repository, have ldap running, execute the following command to simply get the needed credentials.
 ```
 kubectl get secret --namespace identity openldap -o jsonpath="{.data.LDAP_ADMIN_PASSWORD}" | base64 --decode; echo
@@ -26,7 +26,7 @@ kubectl port-forward \$(kubectl get pods -n default --selector='release=openldap
 * When NodeJs starts, automaticly, will try to commit a login to ldap server and database.
 * make sure the ldap instructions are complete and ldap is up and running.
 
-* There are several dependecies here, run [dependencies.sh](path) to store them.
+* There are several dependecies here, run [dependencies.sh](./dependencies.sh) to install and store them.
 
 
 
