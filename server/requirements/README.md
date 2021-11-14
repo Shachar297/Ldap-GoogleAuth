@@ -8,9 +8,9 @@ helm upgrade --install openldap ./charts/openldap --values openldap/values-openl
 ```
 * Make sure the above paths exist, and currect.
 
-* To Ensure process is going to complete succesfully, Make sure that ldap is up and running.
+* To Ensure process is going to complete successfully, Make sure that ldap is up and running.
 * also, make sure that you hold the port, and the DN for the ldap database.
-* For this example you can use [admin.json](https://github.com/Shachar297/Ldap-GoogleAuth/tree/master/server/enviorenment)
+* For this example you can use [admin.json](https://github.com/Shachar297/Ldap-GoogleAuth/tree/master/server/environment)
 * Or if you just cloned this repository, have ldap running, execute the following command to simply get the needed credentials.
 ```
 kubectl get secret --namespace identity openldap -o jsonpath="{.data.LDAP_ADMIN_PASSWORD}" | base64 --decode; echo
@@ -23,10 +23,10 @@ kubectl port-forward \$(kubectl get pods -n default --selector='release=openldap
 
 # NodeJs
 
-* When NodeJs starts, automaticly, will try to commit a login to ldap server and database.
+* When NodeJs starts, automatically, will try to commit a login to ldap server and database.
 * make sure the ldap instructions are complete and ldap is up and running.
 
-* There are several dependecies here, run [dependencies.sh](https://github.com/Shachar297/Ldap-GoogleAuth/blob/master/server/requirements/dependecies.sh) to install and store them.
+* There are several dependencies here, run [dependencies.sh](https://github.com/Shachar297/Ldap-GoogleAuth/blob/master/server/requirements/dependecies.sh) to install and store them.
 
 
 
@@ -35,9 +35,9 @@ kubectl port-forward \$(kubectl get pods -n default --selector='release=openldap
 * Start Ldap Server
 * Start NodeJs
 
-* This example goes automaticly when server starts, details are hard-coded within the [ldap-logic](../logic/ldap-logic.js).
-* If you want to chane this, pass in to the argument to the [ldap-controller](../controllers/ldap-contoller.js) and change the and pass it on to the next module.
+* This example goes automatically when server starts, details are hard-coded within the [ldap-logic](../logic/ldap-logic.js).
+* If you want to change this, pass in to the argument to the [ldap-controller](../controllers/ldap-contoller.js) and change the and pass it on to the next module.
 
-* Next, for test you will be printed the google QR-code, then you will need to scan it, if logged in successfuly.
+* Next, for test you will be printed the google QR-code, then you will need to scan it, if logged in successfully.
 
 * If you execute the addUser function under ldap-controller, you will be needed to pair a key which sent from google.

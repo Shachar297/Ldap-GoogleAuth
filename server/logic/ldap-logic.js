@@ -1,7 +1,7 @@
 var
     ldap = require('ldapjs'),
-    credentials = require('../enviorenment/admin.json'),
-    ldapOptions = require('../enviorenment/ldapOptions.json'),
+    credentials = require('../environment/ldap-admin.json'),
+    ldapOptions = require('../environment/ldapOptions.json'),
     userLogic = require('./user-logic'),
     bunyan = require('bunyan'),
     log = bunyan.createLogger({ name: "myapp" }),

@@ -6,6 +6,7 @@ metadata:
 {{ toYaml .Values.service.annotations | indent 4 }}
 {{- end }}
   name: {{ template "openldap.fullname" . }}
+  namespace: openldap
   labels:
     app: {{ template "openldap.name" . }}
     chart: {{ template "openldap.chart" . }}

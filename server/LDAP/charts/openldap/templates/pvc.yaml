@@ -3,6 +3,7 @@ kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
   name: {{ template "openldap.fullname" . }}
+  namespace: openldap
   labels:
     app: {{ template "openldap.name" . }}
     chart: {{ template "openldap.chart" . }}
