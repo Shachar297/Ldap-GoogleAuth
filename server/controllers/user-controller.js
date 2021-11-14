@@ -1,6 +1,6 @@
-const express = require("express");
-const userLogic = require("../logic/user-logic");
-const router = express.Router();
+const express = require("express"),
+userLogic = require("../logic/user-logic"),
+router = express.Router();
 
 
 // https://www.authenticatorApi.com/pair.aspx?AppName=MyApp&AppInfo=John&SecretCode=12345678BXYT

@@ -1,7 +1,7 @@
 const express = require('express');
-const router = express.Router();
-const ldapLogic = require("../logic/ldap-logic");
-const ldap = require('ldapjs');
+router = express.Router(),
+ldapLogic = require("../logic/ldap-logic"),
+ldap = require('ldapjs');
 
 
 router.post ("/" , (request, response, next) => {
@@ -15,6 +15,8 @@ router.post ("/" , (request, response, next) => {
     }
 })
 
+
+// Add An Entry from scratch.
 router.post("/add/" , (request, response, next) => {
     try {
             const ldapUser = ldapLogic.addUser();
@@ -24,14 +26,14 @@ router.post("/add/" , (request, response, next) => {
     }
 })
 
-// router.post("/search/", (request, response, next) => {
-//     try {
-//         const search = ldapLogic.ldapSearch();
-//         response.json(search)
-//     }catch (error) {
-//         console.log(error)
-//         return next(error);
-//     }
-// })
+router.post("/search/", (request, response, next) => {
+    try {
+        const search = ldapLogic.ldapSearch();
+        response.json(search)
+    }catch (error) {
+        console.log(error)
+        return next(error);
+    }
+})
 
 module.exports = router;

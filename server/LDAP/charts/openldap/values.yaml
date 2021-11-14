@@ -39,7 +39,7 @@ podAnnotations: {}
 service:
   annotations: {}
 
-  ldapPort: 389
+  ldapPort: 3890
   sslLdapPort: 636  # Only used if tls.enabled is true
   ## List of IP addresses at which the service is available
   ## Ref: https://kubernetes.io/docs/user-guide/services/#external-ips

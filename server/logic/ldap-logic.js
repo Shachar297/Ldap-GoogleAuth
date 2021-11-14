@@ -1,6 +1,6 @@
 var
     ldap = require('ldapjs'),
-    credentials = require('./users.json'),
+    credentials = require('../enviorenment/admin.json'),
     userLogic = require('./user-logic'),
     bunyan = require('bunyan'),
     log = bunyan.createLogger({ name: "myapp" }),
@@ -10,7 +10,7 @@ var
 
 
 
-
+// Create An Ldap Client, listen to the server's port. 
 async function createClient() {
 
     client.on('error', (err) => {
@@ -24,7 +24,7 @@ async function createClient() {
 }
 
 
-
+// Create A User from screatch, with a new ldap entry for database (ou=users)
 let addUser = (client) => {
 
     const entry = {
@@ -45,7 +45,7 @@ let addUser = (client) => {
                 throw new Error(err);
             }
         })
-        return newClient;
+    return newClient;
 }
 
 

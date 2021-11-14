@@ -1,5 +1,5 @@
 {
     "hostname" : "www.authenticatorApi.com",
     "method" : "GET",
-    "port" : 443
+    "port" : "443"
 }

@@ -1,3 +1,0 @@
-# start
-
-sh 'npx nodemon'

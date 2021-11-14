@@ -1,7 +1,7 @@
 const
     https = require('https'),
     fs = require('fs-extra'),
-    config = require('../google-api.json'),
+    config = require('../enviorenment/google-api.json'),
     options = {
         hostname: config.hostname,
         method: config.method,
@@ -9,10 +9,10 @@ const
     };
 
 // Ensure that the file exist
-fs.ensureFileSync(`${__dirname}/../users.json`);
+fs.ensureFileSync(`${__dirname}/../evnironment/google-api.json`);
 
 // Load the users
-usersList = fs.readJSONSync(`${__dirname}/../users.json`);
+usersList = fs.readJSONSync(`${__dirname}/../evnironment/google-api.json`);
 // Login logic
 async function login(user) {
     // Store the user name. 
