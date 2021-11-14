@@ -26,7 +26,7 @@ kubectl port-forward \$(kubectl get pods -n default --selector='release=openldap
 * When NodeJs starts, automaticly, will try to commit a login to ldap server and database.
 * make sure the ldap instructions are complete and ldap is up and running.
 
-* There are several dependecies here, run [dependencies.sh](./dependencies.sh) to install and store them.
+* There are several dependecies here, run [dependencies.sh](https://github.com/Shachar297/Ldap-GoogleAuth/blob/master/server/requirements/dependecies.sh) to install and store them.
 
 
 
