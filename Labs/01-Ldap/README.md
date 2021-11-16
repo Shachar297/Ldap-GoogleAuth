@@ -148,9 +148,9 @@ kubectl port-forward \
 - Start Ldap Server
 - Start NodeJs
 
-- This example goes automatically when server starts, details are hard-coded within the [ldap-logic](../server/logic/ldap-logic.js).
-- If you want to change this, pass in the argument to the [ldap-controller](../server/controllers/ldap-contoller.js) and pass it on to the next module.
+- This example goes automatically when server starts, details are hard-coded within the [ldap-logic](../../server/logic/ldap-logic.js).
+- If you want to change this, pass in the argument to the [ldap-controller](../../server/controllers/ldap-contoller.js) and pass it on to the next module.
 
 - Next, for test you will be printed the google QR-code, then you will need to scan it, if logged in successfully.
 
-- If you execute the addUser function under [ldap-controller](../server/controllers/ldap-contoller.js), you will be needed to pair a key which sent from google.
+- If you execute the addUser function under [ldap-controller](../../server/controllers/ldap-contoller.js), you will be needed to pair a key which sent from google.
