@@ -4,7 +4,7 @@
  */
 
 const
-  ip = require("ip"),
+  // ip = require("ip"),
   cors = require("cors"),
   express = require("express"),
   server = express(),
@@ -23,4 +23,4 @@ server.use("/users", userController);
 server.use("/ldap", ldapController);
 
 // Start the server
-server.listen(port, () => console.log("Server is running at port " + ip.address()));
+server.listen(port, () => console.log("Server is running at port " + port));

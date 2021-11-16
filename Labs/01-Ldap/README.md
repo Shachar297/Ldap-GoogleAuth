@@ -106,11 +106,11 @@ OpenLDAP has been installed. You can access the server from within the k8s clust
 #### 02.05. Get LDAP credentials
 
 - In order to be able to connect to the LDAP we need to expose its port.
-- We will also need the DN of the given LDAP & the [admin credentials](./server/environment/ldap-admin.json).
+- We will also need the DN of the given LDAP & the [admin credentials](./server/enviorenment/ldap-admin.json).
 
 ```sh
 # Get the admin credentials from the configuration file
-cat ./server/environment/ldap-admin.json
+cat ./server/enviorenment/ldap-admin.json
 
 ###
 ### Or

@@ -50,7 +50,7 @@ service:
   loadBalancerSourceRanges: []
   type: ClusterIP
 
-# Default configuration for openldap as environment variables. These get injected directly in the container.
+# Default configuration for openldap as enviorenment variables. These get injected directly in the container.
 # Use the env variables from https://github.com/osixia/docker-openldap#beginner-guide
 env:
   LDAP_ORGANISATION: "Example Inc."
