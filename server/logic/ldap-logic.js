@@ -73,7 +73,6 @@ async function clientCompare(client) {
     }
     const answer = client.compare('uid=shachar,ou=users,dc=demo,dc=com', 'sn', 'Ovadida', (err, matched) => {
         console.log(matched, "matched")
-        console.log(err, "error")
         if (err) {
             console.log(err, "error")
             throw new Error(err)
