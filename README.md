@@ -149,6 +149,15 @@ kubectl port-forward \
 
 - Start Ldap Server
 - Start NodeJs
+- Once NodeJs is starting, it tries to communicate with the ldap server, Make sure ldap server is up and running.
+
+
+  ```sh
+  # Redirect to the server folder.
+  cd server/
+  # start nodejs server
+  npm start
+  ```
 
 - This example goes automatically when server starts, details are hard-coded within the [ldap-logic](../../server/logic/ldap-logic.js).
 - If you want to change this, pass in the argument to the [ldap-controller](../../server/controllers/ldap-contoller.js) and pass it on to the next module.
