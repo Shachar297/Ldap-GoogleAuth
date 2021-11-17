@@ -18,7 +18,7 @@ cn: gil
 uid: gil
 givenName: Gil
 sn: Gottesman
-userPassword: 12345
+userPassword: 1234AB1234
 
 dn: uid=shachar,ou=users,dc=demo,dc=com
 objectClass: top
@@ -29,7 +29,7 @@ cn: shachar
 uid: shachar
 givenName: Shachar
 sn: Ovadida
-userPassword: 1234
+userPassword: 1234AB1234
 
 dn: uid=nir,ou=users,dc=demo,dc=com
 objectClass: top
@@ -40,4 +40,4 @@ cn: nir
 uid: nir
 givenName: Nir
 sn: Geier
-userPassword: nir
+userPassword: 1234AB1234

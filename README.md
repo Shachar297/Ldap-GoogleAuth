@@ -78,9 +78,9 @@ userPassword: 1234
 # Pass it the desired values
 # The path are under this repo (inside LDAP folder)
 helm  upgrade \
-      --install openldap \
-      ./charts/openldap \
-      --values ./values-openldap.yml
+      --install openldap ./charts/openldap \
+      --values ./values-openldap.yml \
+      -n openldap
 ```
 
 #### 02.04. Verify that the Helm installed correctly
@@ -130,12 +130,9 @@ kubectl get secret --namespace openldap openldap -o jsonpath="{.data.LDAP_CONFIG
 
 ```sh
 # Expose the LDAP service so we wil lbe able to connect ot it
-kubectl port-forward \
-  $(kubectl get pods \
-    -n openldap \
-    --selector='release=openldap' \
-    -o jsonpath='{.items[0].metadata.name}') \
-    3890:389
+kubectl port-forward --namespace openldap \
+      $(kubectl get pods -n openldap --selector='release=openldap' -o jsonpath='{.items[0].metadata.name}') \
+      3890:389
 ```
 
 # NodeJs
