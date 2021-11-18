@@ -142,13 +142,6 @@ kubectl port-forward --namespace openldap \
 
 - There are several dependencies here, run [dependencies.sh](https://github.com/Shachar297/Ldap-GoogleAuth/blob/master/server/requirements/dependecies.sh) to install and store them.
 
-## Flow
-
-- Start Ldap Server
-- Start NodeJs
-- Once NodeJs is starting, it tries to communicate with the ldap server, Make sure ldap server is up and running.
-
-
   ```sh
   # Redirect to the server folder.
   cd server/
@@ -156,9 +149,15 @@ kubectl port-forward --namespace openldap \
   npm start
   ```
 
+## Flow
+
+- Start Ldap Server
+- Start NodeJs
+- Once NodeJs is starting, it tries to communicate with the ldap server, Make sure ldap server is up and running.
+
 - In This example, the connection between nodejs and ldap happends automatically when node starts.
 
-- Commit a curl to commit an http request. 
+- Commit a curl to make an http request. 
 
 ``` sh
 # Commit a curl to commit an http request, to make a login request.
