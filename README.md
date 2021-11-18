@@ -156,7 +156,7 @@ kubectl port-forward --namespace openldap \
   npm start
   ```
 
-- In This example,the connection between nodejs and ldap happends automatically when node starts.
+- In This example, the connection between nodejs and ldap happends automatically when node starts.
 
 - Commit a curl to commit an http request. 
 
@@ -165,10 +165,7 @@ kubectl port-forward --namespace openldap \
 curl -X POST http://localhost:3333/ldap/
 ```
 
-- The Login details are hard-coded within the [ldap-logic](../../server/logic/ldap-logic.js).
-
-
-- If you want to change this, pass in the argument to the [ldap-controller](../../server/controllers/ldap-contoller.js) and pass it on to the next module.
+- The Login details are hard-coded within the [ldap-logic](../../server/logic/ldap-logic.js), If you want to change this, pass in the argument to the [ldap-controller](../../server/controllers/ldap-contoller.js) and pass it on to the next module.
 
 - Next, for test you will be printed the google QR-code, then you will need to scan it, if logged in successfully.
 
