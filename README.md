@@ -176,7 +176,7 @@ adding new entry "uid=nir,ou=users,dc=demo,dc=com"
 
 - Next, After LDAP is running, and After NodeJs is running also, You can start the authentication.
 
-- Start the <a href="http://:127.0.0.1:5500/client/index.html"> index.html </a>
+- Start the <a href="http://127.0.0.1:5500/client/index.html"> index.html </a>
 
 - Put in the inputs your Credentials. 
 

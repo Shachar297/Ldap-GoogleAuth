@@ -9,7 +9,6 @@ router.post ("/" , (request, response, next) => {
     const password = request.body.password;
     try {
         const connection = ldapLogic.createClient(username, password);
-        console.log(connection)
         response.json(connection);
     } catch (error) {
         console.log("er")

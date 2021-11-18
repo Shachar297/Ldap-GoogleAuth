@@ -15,7 +15,6 @@ var
 // Create An Ldap Client, listen to the server's port. 
 async function createClient(username, password) {
     client.on('error', (err) => {
-        console.log('------- Err: ', err, "!");
         throw new Error(err);
     });
     bindClient(client, username, password);
@@ -59,11 +58,10 @@ async function bindClient(client, username, password) {
         credentials.password, (
             error) => {
         if (error) {
-            console.log(error, "bid error");
+            console.log(error);
             throw new Error(error)
         }
         if (answer) {
-            console.log(answer, "bind answer")
             return clientCompare(client, username, password);
         }
     });
@@ -79,7 +77,7 @@ async function clientCompare(client, username, password) {
     const answer = client.compare(`uid=${username},ou=${loginCredentials.ou},${loginCredentials.dc}`, 'sn', `Ovadida`, (err) => {
 
         if (err) {
-            console.log(err, "error12222222222")
+            console.log(err)
             throw new Error(err)
         }
 
