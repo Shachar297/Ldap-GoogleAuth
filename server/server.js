@@ -1,25 +1,28 @@
 /**
  * This is the main module of the application.
- * This module will listen for in-comming requests and will process them
+ * This module will listen for in-coming requests and will process them
  */
 
 const
   // ip = require("ip"),
-  cors = require("cors"),
   express = require("express"),
+  cors = require("cors"),
   server = express(),
-  userController = require("./controllers/user-controller"),
-  ldapController = require("./controllers/ldap-controller"),
+
+  // The LDAp route which handle the requests
+  ldapController = require("./routes/ldap"),
+
+  // The default port for the demo server
   port = process.env.PORT || 3333;
 
+// Server static content
 server.use(express.static('public'));
 
 // Allow CORS requests
 server.use(cors({ origin: "*" }));
 server.use(express.json());
 
-// Routes
-server.use("/users", userController);
+// Process the requests throw the LDAP Router
 server.use("/ldap", ldapController);
 
 // Start the server

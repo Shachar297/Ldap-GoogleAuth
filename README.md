@@ -1,9 +1,4 @@
-### MFA LDAP with Google Authenticator
-
-- This repository will demonstrate how to set up LDAP with Google Authenticator as 2FA verification.
-
-<!-- inPage TOC start -->
-
+### MFA - [01-Ldap](Labs/01-Ldap)
 ---
 
 ## Lab Highlights:
@@ -32,6 +27,7 @@
 - [NodeJs](https://nodejs.org/en/)
 - [Helm3](https://helm.sh/docs/intro/install/)
 - K8S cluster - In this tutorial we will be using [minikube](https://minikube.sigs.k8s.io/docs/start/)
+- External LDAP server
 
 ### 02. Preparation
 
@@ -78,7 +74,8 @@ userPassword: 1234
 # Pass it the desired values
 # The path are under this repo (inside LDAP folder)
 helm  upgrade \
-      --install openldap ./charts/openldap \
+      --install openldap \
+      ./charts/openldap \
       --values ./values-openldap.yml \
       -n openldap
 ```
@@ -106,11 +103,11 @@ OpenLDAP has been installed. You can access the server from within the k8s clust
 #### 02.05. Get LDAP credentials
 
 - In order to be able to connect to the LDAP we need to expose its port.
-- We will also need the DN of the given LDAP & the [admin credentials](./server/enviorenment/ldap-admin.json).
+- We will also need the DN of the given LDAP & the [admin credentials](./server/environment/ldap-admin.json).
 
 ```sh
 # Get the admin credentials from the configuration file
-cat ./server/enviorenment/ldap-admin.json
+cat ./server/environment/ldap-admin.json
 
 ###
 ### Or
@@ -126,60 +123,63 @@ kubectl get secret --namespace openldap openldap -o jsonpath="{.data.LDAP_ADMIN_
 kubectl get secret --namespace openldap openldap -o jsonpath="{.data.LDAP_CONFIG_PASSWORD}" | base64 --decode; echo
 ```
 
-### # 02.06. Expose the LDAP service
+### 02.06. Expose the LDAP service
 
 ```sh
 # Expose the LDAP service so we wil lbe able to connect ot it
-kubectl port-forward --namespace openldap \
-      $(kubectl get pods -n openldap --selector='release=openldap' -o jsonpath='{.items[0].metadata.name}') \
-      3890:389
+# The default port is 3890
+kubectl port-forward \
+  $(kubectl get pods \
+    -n openldap \
+    --selector='release=openldap' \
+    -o jsonpath='{.items[0].metadata.name}') \
+    3890:389
 ```
 
--- Once openldap is up and running, you will need to execute an ldapadd, to add the [Users.ldif]() into the ldap DB.
+--- 
+### 03. Usage
 
+#### 03.01. Start Ldap Server
+- Start the external LDAP server
+- Add the [Users.ldif](./LDAP/Users.ldif)  DB to LDAP
 ```sh
-ldapadd -x -D "cn=admin,dc=demo,dc=com" -w password -H ldap://localhost:3890 -f Users.ldif 
+```sh
+ldapadd   -x \
+         -D "cn=admin,dc=demo,dc=com" \
+         -H ldap://localhost:3890 \
+         -w password \
+         -f Users.ldif 
 
-# --- The output should look like this, if success.
-
+# The output should look like this:
 adding new entry "ou=users,dc=demo,dc=com"
-
 adding new entry "uid=gil,ou=users,dc=demo,dc=com"
-
 adding new entry "uid=shachar,ou=users,dc=demo,dc=com"
-
 adding new entry "uid=nir,ou=users,dc=demo,dc=com"
-
 ```
 
-# NodeJs
 
-- When NodeJs starts, automatically, will try to commit a login to ldap server and database.
-- make sure the ldap instructions are complete and ldap is up and running.
-
-- There are several dependencies here, run [dependencies.sh](https://github.com/Shachar297/Ldap-GoogleAuth/blob/master/server/requirements/dependecies.sh) to install and store them.
-
-  ```sh
-  # Redirect to the server folder.
-  cd server/
-  # start nodejs server
-  npm start
-  ```
-
-## Flow
-
-- Start Ldap Server
+#### 03.02. Start the demo server (NodeJs)
+> Note
+>   The Nodejs Server try to communicate with the LDAP server so the server so the server must be running.
 - Start NodeJs
-- Once NodeJs is starting, it tries to communicate with the ldap server, Make sure ldap server is up and running.
+```sh
+# Install the required packages
+npm i 
 
-- In This example, the connection between nodejs and ldap happends automatically when node starts.
+# Start the NodeJS server
+ # Redirect to the server folder.
+cd server/
 
-- Next, After LDAP is running, and After NodeJs is running also, You can start the authentication.
+# start nodejs server
+npm start
+```
 
-- Start the <a href="http://127.0.0.1:5500/client/index.html"> index.html </a>
+#### 03.03. View the demo web page
+- This demo is based upon HTML page for entering username password.
+- Open the browser in the following page:
+[http://127.0.0.1:5500/client/index.html](http://127.0.0.1:5500/client/index.html)
+#### 03.04. Fill in the credentials
+- Fill in the credentials in the HTML page.
+- Click on `Login`
 
-- Put in the inputs your Credentials. 
-
-- Validate Authentication with Google.
-
-
+#### 03.04. Scan the QR code

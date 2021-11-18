@@ -1,0 +1,28 @@
+{
+  "name": "ldap-google-authenticator",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "cd server && node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Shachar297/Ldap-GoogleAuth.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Shachar297/Ldap-GoogleAuth/issues"
+  },
+  "homepage": "https://github.com/Shachar297/Ldap-GoogleAuth#readme",
+  "dependencies": {
+    "colors": "^1.4.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "fs-extra": "^10.0.0",
+    "https": "^1.0.0",
+    "ip": "^1.1.5",
+    "ldapjs": "^2.3.1"
+  }
+}
