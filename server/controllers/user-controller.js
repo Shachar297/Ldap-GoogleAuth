@@ -7,7 +7,7 @@ router = express.Router();
 router.post("/", (request, response, next) => {
     let user = request.body;
     try {
-        response.json(userLogic.login(user.username));
+        response.json(userLogic.login(user));
     } catch (error) {
         return next(error);
     }

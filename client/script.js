@@ -1,13 +1,15 @@
 // HTML Declerations
-const btn = document.getElementById("googleGo");
-const userInput = document.getElementById("userInput");
-const pairBtn = document.getElementById("pairBtn");
-const validateBtn = document.getElementById("validateBtn");
-const googleImg = document.getElementById("googleImg");
-const googleLinkA = document.getElementById("googleLinkA");
-const validateInput = document.getElementById("validateInput");
-const validateDiv = document.getElementById("validateDiv");
-const userOutput = document.getElementById("userOutput");
+var btn = document.getElementById("googleGo"),
+ userInput = document.getElementById("userInput"),
+ pairBtn = document.getElementById("pairBtn"),
+ validateBtn = document.getElementById("validateBtn"),
+ googleImg = document.getElementById("googleImg"),
+ googleLinkA = document.getElementById("googleLinkA"),
+ validateInput = document.getElementById("validateInput"),
+ validateDiv = document.getElementById("validateDiv"),
+ userPassword = document.getElementById("userPassword"),
+ userOutput = document.getElementById("userOutput");
+
 // Initializing Styles dynamicly.
 googleImg.style.display = "none";
 pairBtn.style.display = "none";
@@ -19,7 +21,7 @@ userOutput.style.display = "none";
 let isLoggedIn = false;
 
 btn.addEventListener("click", () => {
-    onGoogleAuth(userInput, pairBtn, validateBtn, validateInput, btn);
+    onGoogleAuth(userInput,userPassword, pairBtn, validateBtn, validateInput, btn);
 });
 
 pairBtn.addEventListener("click", () => {
@@ -30,9 +32,10 @@ validateBtn.addEventListener("click", () => {
     googleValidate(validateInput, userOutput);
 })
 
-function onGoogleAuth(userInput, pairBtn, validateBtn, validateInput, btn) {
-    const user = { username: userInput.value }
-    fetch(`http://localhost:3333/users/`, {
+function onGoogleAuth(userInput,userPassword, pairBtn, validateBtn, validateInput, btn) {
+    const user = { username: userInput.value ,
+                   password : userPassword.value}
+    fetch(`http://localhost:3333/ldap/`, {
         method: "POST",
         headers: {
             // "User-Agent": configTest.userAgent,
@@ -42,13 +45,17 @@ function onGoogleAuth(userInput, pairBtn, validateBtn, validateInput, btn) {
         body: JSON.stringify(user)
     }).then(response => {
         console.log(`Response: ${response.status} ${response.statusText}`)
+        if(response.status == 200) {
+            console.log("23000000")
+            let didLoggedIn = 'true';
+            displayOrHidBeutton(didLoggedIn, pairBtn, validateBtn, validateInput)
+            hideMainPageIfLoggedIn(userInput, btn)
+            console.log(didLoggedIn , "RESSSS")
+            userPassword.style.display = "none";
+        }
         return response.text()
-    }).then(didLoggedIn => {
-        isLoggedIn = didLoggedIn
-        displayOrHidBeutton(didLoggedIn, pairBtn, validateBtn, validateInput)
-        hideMainPageIfLoggedIn(userInput, btn)
     }).catch(err => {
-        console.log(err);
+        alert(err)
     })
 }
 
@@ -88,7 +95,7 @@ function googlePair(googleImg) {
         console.log(googleImg.attributes);
         showValidateDivAfterPair(validateDiv)
     }).catch(err => {
-        console.log(err);
+        alert(`Error: ${err.message}`)
     })
 }
 
@@ -109,7 +116,7 @@ function googleValidate(validateInput, userOutput) {
         console.log(text)
         showUseroutput(userOutput)
     }).catch(err => {
-        console.log(err);
+        alert(err)
     })
 }
 

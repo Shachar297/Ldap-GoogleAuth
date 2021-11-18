@@ -135,6 +135,23 @@ kubectl port-forward --namespace openldap \
       3890:389
 ```
 
+-- Once openldap is up and running, you will need to execute an ldapadd, to add the [Users.ldif]() into the ldap DB.
+
+```sh
+ldapadd -x -D "cn=admin,dc=demo,dc=com" -w password -H ldap://localhost:3890 -f Users.ldif 
+
+# --- The output should look like this, if success.
+
+adding new entry "ou=users,dc=demo,dc=com"
+
+adding new entry "uid=gil,ou=users,dc=demo,dc=com"
+
+adding new entry "uid=shachar,ou=users,dc=demo,dc=com"
+
+adding new entry "uid=nir,ou=users,dc=demo,dc=com"
+
+```
+
 # NodeJs
 
 - When NodeJs starts, automatically, will try to commit a login to ldap server and database.
@@ -157,16 +174,12 @@ kubectl port-forward --namespace openldap \
 
 - In This example, the connection between nodejs and ldap happends automatically when node starts.
 
-- Commit a curl to make an http request. 
+- Next, After LDAP is running, and After NodeJs is running also, You can start the authentication.
 
-``` sh
-# Commit a curl to commit an http request, to make a login request.
-curl -X POST http://localhost:3333/ldap/
-```
+- Start the <a href="localhost:127.0.0.1:5500/client/index.html"> index.html </a>
 
-- The Login details are hard-coded within the [ldap-logic](../../server/logic/ldap-logic.js), If you want to change this, pass in the argument to the [ldap-controller](../../server/controllers/ldap-contoller.js) and pass it on to the next module.
+- Put in the inputs your Credentials. 
 
-- Next, for test you will be printed the google QR-code, then you will need to scan it, if logged in successfully.
+- Validate Authentication with Google.
 
-- If you execute the addUser function under [ldap-controller](../../server/controllers/ldap-contoller.js), you will be needed to pair a key which sent from google.
 

@@ -18,7 +18,7 @@ cn: gil
 uid: gil
 givenName: Gil
 sn: Gottesman
-userPassword: 1234AB1234
+userPassword: 1234
 
 dn: uid=shachar,ou=users,dc=demo,dc=com
 objectClass: top

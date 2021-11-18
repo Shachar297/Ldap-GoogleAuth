@@ -27,26 +27,26 @@ async function pair() {
 
     // Return promise
     return new Promise(function (resolve, reject) {
-        let userData = JSON.parse(process.env.userData);
+        // let userData = JSON.parse(process.env.userData);
 
-        console.log(userData);
+        console.log("1111112222222", process.env.userData);
         // Check to see if user name found during login
-        if (!userData) {
+        if (!process.env.userData) {
             return reject('User not valid');
         };
 
         console.log(Object.assign(
             {},
-            options, {
-            path: `/pair.aspx?AppName=A&AppInfo=${userData.username}&SecretCode=${userData.sercetPhrase}`
+            config, {
+            path: `/pair.aspx?AppName=A&AppInfo=${process.env.userData}&SecretCode=${process.env.password}`
         }));
 
         // Execute the API call
         req = https.request(
             Object.assign(
                 {},
-                options, {
-                path: `/pair.aspx?AppName=A&AppInfo=${userData.username}&SecretCode=${userData.sercetPhrase}`
+                config, {
+                path: `/pair.aspx?AppName=A&AppInfo=${process.env.userData}&SecretCode=${process.env.password}`
             }),
             res => {
                 console.log(`statusCode: ${res.statusCode}`);
@@ -77,26 +77,26 @@ async function validate(userPin) {
 
     // Return promise
     return new Promise(function (resolve, reject) {
-        let userData = JSON.parse(process.env.userData);
+        // let userData = JSON.parse(process.env.userData);
 
-        console.log(userData);
+        console.log(process.env.userData);
         // Check to see if user name found during login
-        if (!userData) {
-            return reject('User not valid');
-        };
+        // if (!userData) {
+        //     return reject('User not valid');
+        // };
 
         console.log(Object.assign(
             {},
-            options, {
-            path: `/pair.aspx?AppName=A&AppInfo=${userData.username}&SecretCode=${userData.sercetPhrase}`
+            config, {
+            path: `/pair.aspx?AppName=A&AppInfo=${process.env.userData}&SecretCode=${process.env.password}`
         }));
 
         // Execute the API call
         req = https.request(
             Object.assign(
                 {},
-                options, {
-                path: `/Validate.aspx?Pin=${userPin}&SecretCode=${userData.sercetPhrase}`
+                config, {
+                path: `/Validate.aspx?Pin=${userPin}&SecretCode=${process.env.password}`
             }),
             res => {
                 console.log(`statusCode: ${res.statusCode}`);

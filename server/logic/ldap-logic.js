@@ -11,14 +11,14 @@ var
     });
 
 
-// Create An Ldap Client, listen to the server's port. 
-async function createClient() {
 
+// Create An Ldap Client, listen to the server's port. 
+async function createClient(username, password) {
     client.on('error', (err) => {
-        console.log('------- Err: ', err);
+        console.log('------- Err: ', err, "!");
         throw new Error(err);
     });
-    bindClient(client);
+    bindClient(client, username, password);
     // addUser(client);
     // clientCompare(client);
     return client
@@ -53,17 +53,19 @@ let addUser = (client) => {
 // The bindClient function is actualy the function that bind the LDAP DB administrator to the DB
 // Only an LDAP administrator can commit actions infront of the DB.
 
-async function bindClient(client) {
+async function bindClient(client, username, password) {
     const answer = client.bind(
         credentials.admin,
         credentials.password, (
             error) => {
         if (error) {
-            console.log(error);
+            console.log(error, "bid error");
             throw new Error(error)
         }
-        if (answer) return clientCompare(client);
-        return;
+        if (answer) {
+            console.log(answer, "bind answer")
+            return clientCompare(client, username, password);
+        }
     });
 
 
@@ -73,32 +75,34 @@ async function bindClient(client) {
 // In this case, if we find one, we authenticating him via google by a QR Code.
 // If we dont find one, we just return false.
 
-async function clientCompare(client) {
+async function clientCompare(client, username, password) {
+    const answer = client.compare(`uid=${username},ou=${loginCredentials.ou},${loginCredentials.dc}`, 'sn', `Ovadida`, (err) => {
 
-    const answer = client.compare(`uid=${loginCredentials.uid},ou=${loginCredentials.ou},${loginCredentials.dc}`, 'sn', `${loginCredentials.sn}`, (err, matched) => {
-        console.log(matched, "matched")
-        console.log(err, "error")
         if (err) {
-            console.log(err, "error")
+            console.log(err, "error12222222222")
             throw new Error(err)
         }
 
+        console.log(answer)
 
-        userLogic.login(loginCredentials.givenName).then((login) => {
-            if (login) {
-                let pair = userLogic.pair();
-                console.log(pair)
-            }else{
-                throw new Error("Authentication did not complete. ")
-            }
+        // userLogic.login(loginCredentials.givenName).then((login) => {
+        //     if (login) {
+        //         let pair = userLogic.pair();
+        //         console.log(pair)
+        //     }else{
+        //         throw new Error("Authentication did not complete. ")
+        //     }
 
-        })
-    })
+        // })
+    });
+    process.env.userData = username
+    process.env.password = password
     return answer;
 }
 
 module.exports = {
     createClient,
     bindClient,
-    addUser
+    addUser,
+    clientCompare
 }
