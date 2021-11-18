@@ -26,3 +26,5 @@ kubectl get secret --namespace openldap openldap -o jsonpath="{.data.LDAP_CONFIG
 kubectl port-forward --namespace openldap \
       $(kubectl get pods -n openldap --selector='release=openldap' -o jsonpath='{.items[0].metadata.name}') \
       3890:389
+
+
