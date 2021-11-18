@@ -12,7 +12,7 @@ helm upgrade --install openldap ./charts/openldap --values openldap/values-openl
 
 - To Ensure process is going to complete successfully, Make sure that ldap is up and running.
 - also, make sure that you hold the port, and the DN for the ldap database.
-- For this example you can use [admin.json](https://github.com/Shachar297/Ldap-GoogleAuth/tree/master/server/enviorenment)
+- For this example you can use [admin.json](https://github.com/Shachar297/Ldap-GoogleAuth/tree/master/server/environment)
 - Or if you just cloned this repository, have ldap running, execute the following command to simply get the needed credentials.
 
 ```

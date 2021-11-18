@@ -5,15 +5,21 @@
 <!-- inPage TOC start -->
 
 ---
-
 ## Lab Highlights:
-
 - [01. Pre Requirements](#01-Pre-Requirements)
 - [02. Preparation](#02-Preparation)
   - [02.01. Prepare LDAP](#0201-Prepare-LDAP)
-    - [02.01.01. Prepare LDAP Users](#020101-Prepare-LDAP-Users)
-    - [02.01.02. Install LDAP Helm chart](#020102-Install-LDAP-Helm-chart)
-    - [02.01.02. Verify that the Helm installed correctly](#020102-Verify-that-the-Helm-installed-correctly)
+  - [02.02. Prepare LDAP Users](#0202-Prepare-LDAP-Users)
+  - [02.03. Install LDAP Helm chart](#0203-Install-LDAP-Helm-chart)
+  - [02.04. Verify that the Helm installed correctly](#0204-Verify-that-the-Helm-installed-correctly)
+  - [02.05. Get LDAP credentials](#0205-Get-LDAP-credentials)
+  - [02.06. Expose the LDAP service](#0206-Expose-the-LDAP-service)
+- [03. Usage](#03-Usage)
+  - [03.01. Start Ldap Server](#0301-Start-Ldap-Server)
+  - [03.02. Start the demo server (NodeJs)](#0302-Start-the-demo-server-NodeJs)
+  - [03.03. View the demo web page](#0303-View-the-demo-web-page)
+  - [03.04. Fill in the credentials](#0304-Fill-in-the-credentials)
+  - [03.04. Scan the QR code](#0304-Scan-the-QR-code)
 
 ---
 
@@ -32,6 +38,7 @@
 - [NodeJs](https://nodejs.org/en/)
 - [Helm3](https://helm.sh/docs/intro/install/)
 - K8S cluster - In this tutorial we will be using [minikube](https://minikube.sigs.k8s.io/docs/start/)
+- External LDAP server
 
 ### 02. Preparation
 
@@ -80,7 +87,8 @@ userPassword: 1234
 helm  upgrade \
       --install openldap \
       ./charts/openldap \
-      --values ./values-openldap.yml
+      --values ./values-openldap.yml \
+      -n openldap
 ```
 
 #### 02.04. Verify that the Helm installed correctly
@@ -106,28 +114,31 @@ OpenLDAP has been installed. You can access the server from within the k8s clust
 #### 02.05. Get LDAP credentials
 
 - In order to be able to connect to the LDAP we need to expose its port.
-- We will also need the DN of the given LDAP & the [admin credentials](./server/enviorenment/ldap-admin.json).
+- We will also need the DN of the given LDAP & the [admin credentials](./server/environment/admin.json).
 
 ```sh
 # Get the admin credentials from the configuration file
-cat ./server/enviorenment/ldap-admin.json
+cat ./server/environment/admin.json
 
 ###
 ### Or
 ###
 ### Extract the credentials from the cluster secrets
 
-# get the Admin password - LDAP
-LDAP_ADMIN_PASSWORD=$(kubectl get secret --namespace openldap openldap -o jsonpath="{.data.LDAP_ADMIN_PASSWORD}" | base64 --decode)
+# Importantly, this will include the commands for retrieving the config and administration passwords
 
-# get the Config password
-LDAP_CONFIG_PASSWORD=$(kubectl get secret --namespace openldap openldap -o jsonpath="{.data.LDAP_CONFIG_PASSWORD}" | base64 --decode)
+# Admin Password
+kubectl get secret --namespace openldap openldap -o jsonpath="{.data.LDAP_ADMIN_PASSWORD}" | base64 --decode; echo
+
+# Config password
+kubectl get secret --namespace openldap openldap -o jsonpath="{.data.LDAP_CONFIG_PASSWORD}" | base64 --decode; echo
 ```
 
-### # 02.06. Expose the LDAP service
+### 02.06. Expose the LDAP service
 
 ```sh
 # Expose the LDAP service so we wil lbe able to connect ot it
+# The default port is 3890
 kubectl port-forward \
   $(kubectl get pods \
     -n openldap \
@@ -136,21 +147,50 @@ kubectl port-forward \
     3890:389
 ```
 
-# NodeJs
+--- 
+### 03. Usage
 
-- When NodeJs starts, automatically, will try to commit a login to ldap server and database.
-- make sure the ldap instructions are complete and ldap is up and running.
+#### 03.01. Start Ldap Server
+- Start the external LDAP server
+- Add the [Users.ldif](./LDAP/Users.ldif)  DB to LDAP
+```sh
+```sh
+ldapadd   -x \
+         -D "cn=admin,dc=demo,dc=com" \
+         -H ldap://localhost:3890 \
+         -w password \
+         -f Users.ldif 
 
-- There are several dependencies here, run [dependencies.sh](https://github.com/Shachar297/Ldap-GoogleAuth/blob/master/server/requirements/dependecies.sh) to install and store them.
+# The output should look like this:
+adding new entry "ou=users,dc=demo,dc=com"
+adding new entry "uid=gil,ou=users,dc=demo,dc=com"
+adding new entry "uid=shachar,ou=users,dc=demo,dc=com"
+adding new entry "uid=nir,ou=users,dc=demo,dc=com"
+```
 
-## Flow
 
-- Start Ldap Server
+#### 03.02. Start the demo server (NodeJs)
+> Note
+>   The Nodejs Server try to communicate with the LDAP server so the server so the server must be running.
 - Start NodeJs
+```sh
+# Install the required packages
+npm i 
 
-- This example goes automatically when server starts, details are hard-coded within the [ldap-logic](../../server/logic/ldap-logic.js).
-- If you want to change this, pass in the argument to the [ldap-controller](../../server/controllers/ldap-contoller.js) and pass it on to the next module.
+# Start the NodeJS server
+ # Redirect to the server folder.
+cd server/
 
-- Next, for test you will be printed the google QR-code, then you will need to scan it, if logged in successfully.
+# start nodejs server
+npm start
+```
 
-- If you execute the addUser function under [ldap-controller](../../server/controllers/ldap-contoller.js), you will be needed to pair a key which sent from google.
+#### 03.03. View the demo web page
+- This demo is based upon HTML page for entering username password.
+- Open the browser in the following page:
+[http://127.0.0.1:5500/client/index.html](http://127.0.0.1:5500/client/index.html)
+#### 03.04. Fill in the credentials
+- Fill in the credentials in the HTML page.
+- Click on `Login`
+
+#### 03.04. Scan the QR code

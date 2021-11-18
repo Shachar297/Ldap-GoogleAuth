@@ -1,16 +1,11 @@
 var
     ldap = require('ldapjs'),
-    credentials = require('../enviorenment/admin.json'),
-    ldapOptions = require('../enviorenment/ldapOptions.json'),
-    userLogic = require('./user-logic'),
-    loginCredentials = require('../enviorenment/login'),
-    bunyan = require('bunyan'),
-    log = bunyan.createLogger({ name: "myapp" }),
+    credentials = require('../environment/admin.json'),
+    ldapOptions = require('../environment/ldapOptions.json'),
+    loginCredentials = require('../environment/login'),
     client = ldap.createClient({
         url: [ldapOptions.clientListenIp, ldapOptions.clientListenIp]
     });
-
-
 
 // Create An Ldap Client, listen to the server's port. 
 async function createClient(username, password) {
@@ -24,9 +19,7 @@ async function createClient(username, password) {
     return client
 }
 
-
 // Create a new user + a new entry from scratch to ldap DB.
-
 let addUser = (client) => {
 
     const entry = {
@@ -50,8 +43,8 @@ let addUser = (client) => {
     return newClient;
 }
 
-// The bindClient function is actualy the function that bind the LDAP DB administrator to the DB
-// Only an LDAP administrator can commit actions infront of the DB.
+// The bindClient function is actually the function that bind the LDAP DB administrator to the DB
+// Only an LDAP administrator can commit actions to the DB.
 
 async function bindClient(client, username, password) {
     const answer = client.bind(
@@ -67,8 +60,6 @@ async function bindClient(client, username, password) {
             return clientCompare(client, username, password);
         }
     });
-
-
 }
 
 // clientCompare is the function who searches a user in the LDAP DB and returns a boolean indicating.
@@ -84,16 +75,6 @@ async function clientCompare(client, username, password) {
         }
 
         console.log(answer)
-
-        // userLogic.login(loginCredentials.givenName).then((login) => {
-        //     if (login) {
-        //         let pair = userLogic.pair();
-        //         console.log(pair)
-        //     }else{
-        //         throw new Error("Authentication did not complete. ")
-        //     }
-
-        // })
     });
     process.env.userData = username
     process.env.password = password

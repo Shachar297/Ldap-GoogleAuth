@@ -1,6 +1,6 @@
 #
 # A ConfigMap spec for openldap slapd that map directly to env variables in the Pod.
-# List of enviorenment variables supported is from the docker image:
+# List of environment variables supported is from the docker image:
 # https://github.com/osixia/docker-openldap#beginner-guide
 # Note that passwords are defined as secrets
 #
