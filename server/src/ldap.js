@@ -8,8 +8,11 @@ var
     // Load the configuration
     config = require('../config/config'),
 
+    userLogic = require('../logic/user-logic'),
     // The ldap client implementation
-    client;
+    client,
+
+    username;
 
 
 // clientCompare is the function who searches a user in the LDAP DB and returns a boolean indicating.
@@ -19,9 +22,9 @@ var
 function login(username, password) {
 
     return new Promise((resolve, reject) => {
-        client.search(
+        const user = client.search(
             `uid=${username},${config.ldap.base_dn}`,
-            { attributes: ['sn'] },
+     
             (err, reply) => {
 
                 if (err) {
@@ -41,13 +44,17 @@ function login(username, password) {
                 });
                 reply.on('error', (err) => {
                     console.error(colors.yellow('error: ' + err.message));
+                    return error;
                 });
                 reply.on('end', (result) => {
                     console.log(colors.yellow('status: ' + result.status));
                 });
 
 
-            });
+            })
+            process.env.username = username;
+            return resolve(user)
+            ;
     });
 }
 

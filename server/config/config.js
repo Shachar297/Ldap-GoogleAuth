@@ -15,7 +15,7 @@ module.exports = {
   // },
   ldap: {
     serverUrl: "ldap://ipa.demo1.freeipa.org",
-    base_dn: "cn=accounts,dc=demo1,dc=freeipa,dc=org",
+    base_dn: "cn=users,cn=accounts,dc=demo1,dc=freeipa,dc=org",
 
     credentials: {
       base_cn: "uid=admin,cn=users,cn=accounts,dc=demo1,dc=freeipa,dc=org",
@@ -27,6 +27,9 @@ module.exports = {
     hostname: "www.authenticatorApi.com",
     method: "GET",
     port: "443"
-  }
+  },
+
+  googleSecrets: "12345678BXYT"
+  
 
 }

@@ -8,15 +8,14 @@ var btn = document.getElementById("googleGo"),
     validateInput = document.getElementById("validateInput"),
     validateDiv = document.getElementById("validateDiv"),
     userPassword = document.getElementById("userPassword"),
-    userOutput = document.getElementById("userOutput");
+    userOutput = document.getElementById("userOutput"),
+    loginDiv = document.getElementById("login-content"),
+    pairDiv = document.getElementById("pairDiv"),
+    validateDiv = document.getElementById("validateDiv");
+
 
 // Initializing Styles dynamically.
-googleImg.style.display = "none";
-pairBtn.style.display = "none";
-validateBtn.style.display = "none";
-validateInput.style.display = "none";
-validateDiv.style.display = "none";
-userOutput.style.display = "none";
+initStyles();
 
 let isLoggedIn = false;
 
@@ -32,7 +31,7 @@ validateBtn.addEventListener("click", () => {
     googleValidate(validateInput, userOutput);
 })
 
-function onGoogleAuth(userInput, userPassword, pairBtn, validateBtn, validateInput, btn) {
+function onGoogleAuth(userInput, userPassword) {
     const user = {
         username: userInput.value,
         password: userPassword.value
@@ -48,12 +47,9 @@ function onGoogleAuth(userInput, userPassword, pairBtn, validateBtn, validateInp
     }).then(response => {
         console.log(`Response: ${response.status} ${response.statusText}`)
         if (response.status == 200) {
-            console.log("23000000")
             let didLoggedIn = 'true';
-            displayOrHideButton(didLoggedIn, pairBtn, validateBtn, validateInput)
-            hideMainPageIfLoggedIn(userInput, btn)
-            console.log(didLoggedIn, "RESSSS")
-            userPassword.style.display = "none";
+            onLoginHandleStyles(didLoggedIn)
+
         }
         return response.text()
     }).catch(err => {
@@ -68,6 +64,7 @@ function showValidateDivAfterPair(validateDiv) {
 function hideMainPageIfLoggedIn(input, btn) {
     input.style.display = 'none';
     btn.style.display = 'none';
+    loginDiv.style.display = 'none';
 }
 
 function displayOrHideButton(bool, pairBtn, validateBtn) {
@@ -78,7 +75,7 @@ function displayOrHideButton(bool, pairBtn, validateBtn) {
 
 function googlePair(googleImg) {
 
-    fetch(`http://localhost:3333/users/pair/`, {
+    fetch(`http://localhost:3333/users/`, {
         method: "POST",
         headers: {
             // "User-Agent": configTest.userAgent,
@@ -89,13 +86,7 @@ function googlePair(googleImg) {
         console.log(`Response: ${response.status} ${response.statusText}`)
         return response.text()
     }).then(text => {
-        googleImg.style.display = "block";
-        text = JSON.parse(text);
-        text = text.split('<')[2].split("'")[1]
-        console.log(text)
-        googleImg.src = text
-        console.log(googleImg.attributes);
-        showValidateDivAfterPair(validateDiv)
+        onPairHandleStyles(text)
     }).catch(err => {
         alert(`Error: ${err.message}`)
     })
@@ -103,7 +94,7 @@ function googlePair(googleImg) {
 
 function googleValidate(validateInput, userOutput) {
     const pin = { validatePin: validateInput.value }
-    fetch("http://localhost:3333/users/validate/userPin/", {
+    fetch("http://localhost:3333/users/pin/", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
@@ -115,14 +106,48 @@ function googleValidate(validateInput, userOutput) {
         console.log(`Response: ${response.status} ${response.statusText}`)
         return response.text()
     }).then(text => {
-        console.log(text)
-        showUseroutput(userOutput)
+        onValidate(text)
     }).catch(err => {
         alert(err)
     })
 }
 
 
-function showUseroutput(userOutput) {
-    userOutput.style.display = "block";
+function showUseroutput(userOutput, result) {
+    userOutput.classList.add(result == 'True' ? 'alert-success' : 'alert-failure')
+     userOutput.style.display = "block";
+}
+
+function initStyles() {
+    googleImg.style.display = "none";
+    pairBtn.style.display = "none";
+    validateBtn.style.display = "none";
+    validateInput.style.display = "none";
+    validateDiv.style.display = "none";
+    userOutput.style.display = "none";
+}
+
+function onLoginHandleStyles(didLoggedIn) {
+    displayOrHideButton(didLoggedIn, pairBtn, validateBtn, validateInput)
+    hideMainPageIfLoggedIn(userInput, btn)
+    console.log(didLoggedIn, "RESSSS")
+    userPassword.style.display = "none";
+}
+
+function onPairHandleStyles(text) {
+    googleImg.style.display = "block";
+    text = JSON.parse(text);
+    text = text.split('<')[2].split("'")[1]
+    console.log(text)
+    googleImg.src = text
+    console.log(googleImg.attributes);
+    showValidateDivAfterPair(validateDiv)
+    pairBtn.style.display = "none";
+}
+
+
+function onValidate(text) {
+    console.log(text)
+        showUseroutput(userOutput, text)
+
 }

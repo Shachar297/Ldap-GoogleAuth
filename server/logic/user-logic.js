@@ -1,15 +1,9 @@
 const
     https = require('https'),
     fs = require('fs-extra'),
-    config = require('../environment/google-api.json');
+    config = require('../config/config.js');
 
 // Login logic
-async function login(user) {
-    // Store the user name. 
-    // We need to convert it to string since env stores only string
-    process.env.userData = JSON.stringify(usersList[user]);
-    return process.env.userData;
-}
 
 /**
  * Request Authentication 
@@ -23,24 +17,23 @@ async function pair() {
     return new Promise(function (resolve, reject) {
         // let userData = JSON.parse(process.env.userData);
 
-        console.log("1111112222222", process.env.userData);
         // Check to see if user name found during login
-        if (!process.env.userData) {
+        if (!process.env.username) {
             return reject('User not valid');
         };
 
         console.log(Object.assign(
             {},
-            config, {
-            path: `/pair.aspx?AppName=A&AppInfo=${process.env.userData}&SecretCode=${process.env.password}`
+            config.googleAPI, {
+            path: `/pair.aspx?AppName=A&AppInfo=${process.env.username}&SecretCode=${config.googleSecrets}`
         }));
 
         // Execute the API call
         req = https.request(
             Object.assign(
                 {},
-                config, {
-                path: `/pair.aspx?AppName=A&AppInfo=${process.env.userData}&SecretCode=${process.env.password}`
+                config.googleAPI, {
+                path: `/pair.aspx?AppName=A&AppInfo=${process.env.username}&SecretCode=${config.googleSecrets}`
             }),
             res => {
                 console.log(`statusCode: ${res.statusCode}`);
@@ -73,31 +66,25 @@ async function validate(userPin) {
     return new Promise(function (resolve, reject) {
         // let userData = JSON.parse(process.env.userData);
 
-        console.log(process.env.userData);
         // Check to see if user name found during login
         // if (!userData) {
         //     return reject('User not valid');
         // };
 
-        console.log(Object.assign(
-            {},
-            config, {
-            path: `/pair.aspx?AppName=A&AppInfo=${process.env.userData}&SecretCode=${process.env.password}`
-        }));
 
         // Execute the API call
         req = https.request(
             Object.assign(
                 {},
-                config, {
-                path: `/Validate.aspx?Pin=${userPin}&SecretCode=${process.env.password}`
+                config.googleAPI, {
+                path: `/Validate.aspx?Pin=${userPin}&SecretCode=${config.googleSecrets}`
             }),
             res => {
                 console.log(`statusCode: ${res.statusCode}`);
 
                 // Listen for data
                 res.on('data', data => {
-                    console.log("!!!")
+                    console.log("!!!", data)
                     process.stdout.write(data);
                     return resolve(data.toString());
                 });
@@ -106,7 +93,7 @@ async function validate(userPin) {
         // Listen for error
         req.on('error', error => {
             process.stdout.write(error);
-            return resolve(error);
+            return reject(error);
         });
 
         // Execute the request
@@ -114,7 +101,6 @@ async function validate(userPin) {
     });
 }
 module.exports = {
-    login,
     pair,
     validate
 }

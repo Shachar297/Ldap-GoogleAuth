@@ -13,7 +13,6 @@ router.post("/", (request, response, next) => {
         ldapLogic
             .login(username, password)
             .then((reply) => {
-                console.log(reply)
                 response.json(reply);
             });
 

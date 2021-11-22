@@ -11,7 +11,7 @@
 
     <body class="p-3 m-3">
  <div class="row">
-            <div class="card col-3 p-0 m-1">
+            <div class="card col-3 p-0 m-1" id="login-content">
                 <div class="card-header alert alert-warning">
                     Choose User
                 </div>
@@ -38,17 +38,18 @@
 
             </div>
 
-            <div class="pair">
+            <div class="pair" col-3 id="pairDiv">
 
-                <button id="pairBtn"> Pair </button>
-                <img width="220px" height="220px" src="" alt="" id="googleImg">
+                <button id="pairBtn" class="btn btn-primary w-25"> Pair </button>
+                <img width="220px" height="220px" src="" alt="" id="googleImg" class="img-responsive mb-4">
 
             </div>
 
             <div class="validate" id="validateDiv">
 
-                <input type="text" placeholder="Please enter the validation code (6 digits)" id="validateInput">
-                <button id="validateBtn"> Validate </button>
+                <input type="text" placeholder="Please enter the validation code (6 digits)" id="validateInput" class="form-control w-25">
+                <br>
+                <button id="validateBtn" class="btn btn-primary w-25"> Validate </button>
                 <br>
             </div>
 
