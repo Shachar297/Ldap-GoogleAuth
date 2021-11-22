@@ -129,7 +129,7 @@ function initStyles() {
 
 function onLoginHandleStyles(didLoggedIn) {
     displayOrHideButton(didLoggedIn, pairBtn, validateBtn, validateInput)
-    hideMainPageIfLoggedIn(userInput, btn)
+    //hideMainPageIfLoggedIn(userInput, btn)
     console.log(didLoggedIn, "RESSSS")
     userPassword.style.display = "none";
 }

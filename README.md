@@ -51,5 +51,3 @@ npm start
 - Scan the QR Code in the Google Authenticator APP.
 
 - Fill in the 6 digit password google sends you.
-
-#### 03.04. Scan the QR code
