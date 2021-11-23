@@ -1,0 +1,35 @@
+body {
+	background-color: rgb(247, 247, 247);
+	font-size: 14px;
+}
+
+.wrapper {
+	position: relative;
+	max-width: 900px;
+	margin: 50px auto;
+}
+
+.content {
+	background: rgb(255, 255, 255);
+	box-shadow: 0px 0px 10px #c5c5c5;
+	border-radius: 15px;
+}
+
+.header {
+	background: url("../images/header.png");
+	background-size: cover;
+	height: 200px;
+	border-radius: 15px 15px 0 0;
+	background-position: bottom;
+	background-repeat: no-repeat;
+	opacity: 0.75;
+	border-bottom: 5px solid rgb(93, 173, 226);
+}
+
+.login-content {
+	border-right: 1px solid;
+}
+
+#qrCode {
+	margin: -20px 0 0 -20px;
+}

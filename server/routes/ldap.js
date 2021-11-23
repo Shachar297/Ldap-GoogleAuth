@@ -3,17 +3,24 @@ const
     router = express.Router(),
     ldapLogic = require("../src/ldap");
 
-router.post("/", (request, response, next) => {
+/**
+ * Process the LDAP login 
+ */
+router.post("/", (req, res, next) => {
     const
-        username = request.body.username,
-        password = request.body.password;
+        username = req.body.username,
+        password = req.body.password;
 
-    console.log(request.body);
+    console.log(`Processing login: ${JSON.stringify(req.body)}`);
     try {
         ldapLogic
             .login(username, password)
             .then((reply) => {
-                response.json(reply);
+                console.log(`Reply from login: ${reply}`)
+                res.status(200).json(reply);
+            }).catch(err => {
+                console.log(`Error while trying to login: ${err}`)
+                res.status(400).send('Error while trying to login');
             });
 
     } catch (error) {

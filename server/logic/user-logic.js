@@ -57,20 +57,18 @@ async function pair() {
 
 }
 
+/**
+ * Validate the given Pin code
+ * @param {*} userPin 
+ * @returns 
+ */
 async function validate(userPin) {
-    console.log(userPin);
+
     // Define params
     let req;
 
     // Return promise
     return new Promise(function (resolve, reject) {
-        // let userData = JSON.parse(process.env.userData);
-
-        // Check to see if user name found during login
-        // if (!userData) {
-        //     return reject('User not valid');
-        // };
-
 
         // Execute the API call
         req = https.request(
@@ -84,8 +82,8 @@ async function validate(userPin) {
 
                 // Listen for data
                 res.on('data', data => {
-                    console.log("!!!", data)
-                    process.stdout.write(data);
+                    console.log("!!!", data.toString())
+                    process.stdout.write(data.toString());
                     return resolve(data.toString());
                 });
             });

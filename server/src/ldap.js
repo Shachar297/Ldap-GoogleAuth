@@ -8,11 +8,8 @@ var
     // Load the configuration
     config = require('../config/config'),
 
-    userLogic = require('../logic/user-logic'),
     // The ldap client implementation
-    client,
-
-    username;
+    client;
 
 
 // clientCompare is the function who searches a user in the LDAP DB and returns a boolean indicating.
@@ -20,41 +17,30 @@ var
 // If we dont find one, we just return false.
 
 function login(username, password) {
-
+    console.log('Login....');
     return new Promise((resolve, reject) => {
+        // Search for existing user based upon username 
         const user = client.search(
+            // Search with uid=XXX, base_dn
             `uid=${username},${config.ldap.base_dn}`,
-     
             (err, reply) => {
 
+                // Check to see if there is any error
                 if (err) {
-                    console.log(err);
+                    console.log(`Error while trying to login user`);
                     reject(err);
-                    //throw new Error(err)
                 }
 
-                reply.on('searchRequest', (searchRequest) => {
-                    console.log(colors.yellow('searchRequest: ', searchRequest));
-                });
+                // reply.on('searchRequest', (searchRequest) => {
+                //     console.log(colors.yellow('searchRequest: ', searchRequest));
+                // });
                 reply.on('searchEntry', (entry) => {
-                    console.log(colors.yellow('entry: ' + JSON.stringify(entry.object)));
+                    // console.log(colors.yellow('entry: ' + JSON.stringify(entry.object)));
+                    console.log(colors.yellow('User found'));
+                    process.env.username = username;
+                    return resolve(entry);
                 });
-                reply.on('searchReference', (referral) => {
-                    console.log('referral: ' + referral.uris.join());
-                });
-                reply.on('error', (err) => {
-                    console.error(colors.yellow('error: ' + err.message));
-                    return error;
-                });
-                reply.on('end', (result) => {
-                    console.log(colors.yellow('status: ' + result.status));
-                });
-
-
             })
-            process.env.username = username;
-            return resolve(user)
-            ;
     });
 }
 
@@ -96,8 +82,8 @@ function init() {
                 console.log(colors.yellow('* Admin user is bound to LDAP server'))
             });
     });
-
-
 }
 
+
+// Setup the LDAP connection
 init();
