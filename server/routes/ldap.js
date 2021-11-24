@@ -7,6 +7,7 @@ const
  * Process the LDAP login 
  */
 router.post("/", (req, res, next) => {
+    
     const
         username = req.body.username,
         password = req.body.password;
@@ -16,10 +17,8 @@ router.post("/", (req, res, next) => {
         ldapLogic
             .login(username, password)
             .then((reply) => {
-                console.log(`Reply from login: ${reply}`)
                 res.status(200).json(reply);
             }).catch(err => {
-                console.log(`Error while trying to login: ${err}`)
                 res.status(400).send('Error while trying to login');
             });
 

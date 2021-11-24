@@ -6,6 +6,10 @@ function init() {
 
     // Validation input
     $('#validateBtn').on('click', MFAValidate);
+
+    // Validation input
+    $('#validateInput').on('keyup', MFAValidate);
+
 };
 
 /**
@@ -67,6 +71,12 @@ function getMFA() {
  */
 function MFAValidate() {
     console.log('MFAValidate');
+
+    // Check to see if there are 6 digits in the field
+    if ($('#validateInput').val().length !== 6) {
+        return;
+    }
+
 
     $.ajax("/auth/validateMFA/", {
         method: "POST",
