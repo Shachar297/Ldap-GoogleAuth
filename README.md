@@ -126,4 +126,33 @@ kubectl get endpoints -n openldap
 
 # FreeRadius
 
-To be Continued.
+### Locate yourself inside the Freeradius directory.
+
+* Update the service file with expected Metallb IP address.
+
+* Deploy RADIUS deployment and service.
+
+
+```sh
+kubectl create configmap freeradius-files --from-file radiusd.conf
+kubectl create secret generic freeradius-secrets --from-file authorize --from-file clients.conf 
+kubectl apply -f 01-deployment.yml 
+kubectl apply -f 02-services.yml 
+```
+
+
+### Update Configuration files.
+
+```sh
+kubectl delete configmaps freeradius-files 
+kubectl create configmap freeradius-files --from-file radiusd.conf
+kubectl rollout restart deployment freeradius 
+```
+
+#### Update configuration files with sensitive data (secret)
+
+```sh
+kubectl delete secret freeradius-secrets 
+kubectl create secret generic freeradius-secrets --from-file authorize --from-file clients.conf 
+kubectl rollout restart deployment freeradius 
+```
