@@ -3,9 +3,9 @@
 set -x
 
 minikube_status=$(minikube status)
+PF=kubectl port-forward openldap-6f478b4558-wsvg7 -n openldap 3899:389;
 
-echo $minikube_status
-
+# Checking if minikue has started or stopped
 if [[ $minikube_status == *"Stopped" ]];
 then
 minikube start
@@ -15,18 +15,23 @@ fi
 #git checkout ldap-end-to-end
 cd LDAP
 
-PF=kubectl port-forward openldap-6f478b4558-wsvg7 -n openldap 3899:389;
 
 helm  upgrade \
       --install openldap \
       ./charts/openldap \
       --values ./values-openldap.yml
 
+# MacOs Users Only can execute this command
+
 #osascript -e 'tell application "Terminal" to activate' \
 #-e 'tell application "System Events" to tell process "Terminal" to keystroke "t" using command down' \
 #-e 'tell application "terminal" to do do script /"${PF}"/ in different tab of the front window'
 
-echo "kubectl port-forward openldap-6f478b4558-wsvg7 -n openldap 3899:389 &" >> portforward.sh
+if [[ -f portforward.sh ]]; then
+rm portforward.sh
+fi
+
+echo "kubectl port-forward $(kubectl get pods -n openldap) -n openldap 3899:389 &" >> portforward.sh
 chmod +x portforward.sh
 
 ./portforward.sh
