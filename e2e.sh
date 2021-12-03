@@ -4,7 +4,7 @@ set -x
 
 minikube_status=$(minikube status)
 PF=kubectl port-forward openldap-6f478b4558-wsvg7 -n openldap 3899:389;
-
+my_release=keycloak
 # Checking if minikue has started or stopped
 if [[ $minikube_status == *"Stopped" ]];
 then
@@ -45,20 +45,29 @@ ldapadd   -x \
          -w password \
          -f Users.ldif 
 
-echo "--------"
+echo "-------- LDAP Section Done -------"
 
 cd ..
 mkdir keycloak
 cd keycloak
 
+# Add the official repo of bitnami of keycloak na install it with those two commands
+
 helm repo add bitnami https://charts.bitnami.com/bitnami
-helm install keycloak bitnami/keycloak
-
-kubectl get secret -n default my-release-keycloak -o jsonpath="{.data.management-password}"; echo
+helm install $my_release bitnami/keycloak
 
 
+# Username defaultly is 'user'
+
+# Get the Management password for logging in to keycloak GUI
+kubectl get secret -n default $my_release-keycloak -o jsonpath="{.data.management-password}"; echo
+
+# keycloak is a load balancer.
 minikube tunnel
 
 
 open -a "Google Chrome" localhost:80
+
+# Customize your keycloak to LDAP DB
+# Take a look at README.md
 
