@@ -27,7 +27,8 @@ helm  upgrade \
 #-e 'tell application "System Events" to tell process "Terminal" to keystroke "t" using command down' \
 #-e 'tell application "terminal" to do do script /"${PF}"/ in different tab of the front window'
 
-if [[ -f portforward.sh ]]; then
+if [[ -f portforward.sh ]];
+ then
 rm portforward.sh
 fi
 
