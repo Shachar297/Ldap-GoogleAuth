@@ -30,9 +30,9 @@ spec:
           image: 'freeradius/freeradius-server:latest-alpine'
           ports:
             - containerPort: 1812
-              protocol: UDP
+              protocol: TCP
             - containerPort: 1813
-              protocol: UDP
+              protocol: TCP
           volumeMounts:
             - name: raddb-secrets
               mountPath: /etc/raddb/mods-config/files/authorize

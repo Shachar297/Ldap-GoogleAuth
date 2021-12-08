@@ -8,3 +8,8 @@ rad_guest    Cleartext-Password := "Guest123"
 	F5-LTM-User-Info-1 = mgmt,
 	F5-LTM-User-Partition = Common,
 	F5-LTM-User-Shell = tmsh
+
+
+DEFAULT Ldap-Group == "cn=shachar,ou=users,dc=demo,dc=com"
+  Reply-Message = "You Are Accepted"
+  DEFAULT Auth-Type := Reject
